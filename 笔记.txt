@@ -1,0 +1,151 @@
+svg生成Icon
+
+数据mock配置
+在dev-server.js 文件中配置路由信息
+var app = express()
+var appData = require('../data.json');
+var seller = appData.seller;
+var goods = appData.goods;
+var ratings = appData.ratings;
+var apiRoutes = express.Router();
+apiRoutes.get('/goods', function (req, res) {
+  res.json({
+    errno: 0,
+    data: goods
+  });
+});
+app.use('/api',apiRoutes);
+
+配置eslint解析规则
+在eslintrc.js文件中
+'semi':['error','always'],  // 加分号
+'indent':0 // 忽略webstrom自动格式化 缩进
+'space-before-function-paren':0  忽略函数前面加空格这条规则
+安装stylus stylusloader
+cnpm install stylus stylus-loader
+
+在webpack.base.config.js中设置components的默认路径
+'components': path.resolve(__dirname, '../src/components')
+
+路由的配置
+引入路由模块并使用
+配置路由
+生成路由实例
+挂载路由
+
+
+
+1像素  配置问题
+@mixin border-1px($color){
+  position: relative;
+
+  &:after{
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    display: block;
+    width: 100%;
+    border-top: 1px solid $color;
+  }
+};
+sass中的混合器
+a {
+  @include link-colors(blue, red, green);
+}
+@mixin link-colors($normal, $hover, $visited) {
+  color: $normal;
+  &:hover { color: $hover; }
+  &:visited { color: $visited; }
+}
+
+import './common/scss/index.scss';  一定要在最前面加./
+
+载main.js中引入index.scss文件 ?? 在用到mixins的地方引入
+
+头部模糊效果
+div里面放图片 div定位 z-index: -1; filter: blur(10px);
+img 100% 100%
+            .background{
+              position: absolute;
+              top:0;
+              left: 0;
+              width: 100%;
+              height: 100%;
+              z-index: -1;
+              filter: blur(10px);
+            }
+vue动画系统
+自定义动画  <transition name="fade"></transition>
+      &.fade-enter-active{
+        /* 定义动画执行的时间 必须要加 */
+        transition: 0.5s all ease;
+        /* 动画显示的目标*/
+        opacity:1;
+        background:rgba(7,17,27,0.8);
+      }
+      &.fade-leave-active{
+         /* 定义动画执行的时间 */
+        transition: 0.5s all ease;
+        /*动画隐藏的目标*/
+        opacity:0;
+        background:rgba(7,17,27,0);
+      }
+      /*过渡开始之前和过渡出去结束的样式 一般是一样的  动画最开始的初始状态*/
+      &.fade-enter,&.fade-leave{
+        opacity:0;
+        background:rgba(7,17,27,0);
+      }
+
+     配合animate.css 使用
+     <transition enter-active-class="bounceInLeft" leave-active-class="bounceOutRight">
+                 <p v-show="show" class="animated"></p>
+     </transition>
+   默认情况下元素左右两边的有一定的间距（回车引起）  只需要设置父元素的font-size为0即可消除/或者将两个元素写到同一行
+   将父元素的font-size设置为0后要重新设置子元素的font-size
+
+   文字和图片相邻要垂直居中显示  给文字加上vertical-align:top  让文字基于左边顶部的基线显示  并不需要设置行高
+
+  让图片在div中垂直居中显示的办法  给div设置和高度一样的行高  再给图片设置vertical-align:middle
+
+  div中放图片 图片下面有3px间距  给图片设置vertical-align:top;  或者给div设置font-size:0
+
+
+.menu-item{
+        display: table;
+        height: 54px;
+        line-height: 14px;
+        width: 56px;
+
+          .icon{
+            display: inline-block;
+            vertical-align: top;
+            width: 12px;
+            height: 12px;
+            margin-right: 2px;
+            background-size: 12px 12px;
+            background-repeat: no-repeat;
+            &.decrease {
+              @include bg-image('decrease_3');
+            }
+            &.discount {
+              @include bg-image('discount_3');
+            }
+            &.guarantee {
+              @include bg-image('guarantee_3');
+            }
+            &.invoice {
+              @include bg-image('invoice_3');
+            }
+            &.special {
+              @include bg-image('special_3');
+            }
+          }
+      }
+
+在$nextTick的回调函数后做初始化的操作
+this.$nextTick(() => {
+             this._initScroll();
+             this._calculateHeight();
+          });
+ ref="menuWrapper" 可以通过ref属性获得对应的DOM元素 this.$refs.menuWrapper
